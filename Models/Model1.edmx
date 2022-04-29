@@ -1,0 +1,365 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="testModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="testModelStoreContainer">
+          <EntitySet Name="city2" EntityType="testModel.Store.city2" store:Type="Tables" Schema="test" />
+          <EntitySet Name="country" EntityType="testModel.Store.country" store:Type="Tables" Schema="test" />
+          <EntitySet Name="empstate" EntityType="testModel.Store.empstate" store:Type="Tables" Schema="test" />
+          <EntitySet Name="state1" EntityType="testModel.Store.state1" store:Type="Tables" Schema="test" />
+          <AssociationSet Name="city2_ibfk_1" Association="testModel.Store.city2_ibfk_1">
+            <End Role="state1" EntitySet="state1" />
+            <End Role="city2" EntitySet="city2" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_1" Association="testModel.Store.empstate_ibfk_1">
+            <End Role="country" EntitySet="country" />
+            <End Role="empstate" EntitySet="empstate" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_2" Association="testModel.Store.empstate_ibfk_2">
+            <End Role="state1" EntitySet="state1" />
+            <End Role="empstate" EntitySet="empstate" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_3" Association="testModel.Store.empstate_ibfk_3">
+            <End Role="city2" EntitySet="city2" />
+            <End Role="empstate" EntitySet="empstate" />
+          </AssociationSet>
+          <AssociationSet Name="state1_ibfk_1" Association="testModel.Store.state1_ibfk_1">
+            <End Role="country" EntitySet="country" />
+            <End Role="state1" EntitySet="state1" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="city2">
+          <Key>
+            <PropertyRef Name="cityid" />
+          </Key>
+          <Property Name="cityid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="cityname" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="stateid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="countryid" />
+          </Key>
+          <Property Name="countryid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="countryname" Type="varchar" Nullable="false" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="empstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="lastname" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="email" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="address" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="countryid" Type="int" Nullable="false" />
+          <Property Name="stateid" Type="int" Nullable="false" />
+          <Property Name="cityid" Type="int" Nullable="false" />
+          <Property Name="number" Type="varchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="state1">
+          <Key>
+            <PropertyRef Name="stateid" />
+          </Key>
+          <Property Name="stateid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="statename" Type="varchar" Nullable="false" MaxLength="200" />
+          <Property Name="countryid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="city2_ibfk_1">
+          <End Role="state1" Type="testModel.Store.state1" Multiplicity="1" />
+          <End Role="city2" Type="testModel.Store.city2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="city2">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_1">
+          <End Role="country" Type="testModel.Store.country" Multiplicity="1" />
+          <End Role="empstate" Type="testModel.Store.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_2">
+          <End Role="state1" Type="testModel.Store.state1" Multiplicity="1" />
+          <End Role="empstate" Type="testModel.Store.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_3">
+          <End Role="city2" Type="testModel.Store.city2" Multiplicity="1" />
+          <End Role="empstate" Type="testModel.Store.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city2">
+              <PropertyRef Name="cityid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="cityid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="state1_ibfk_1">
+          <End Role="country" Type="testModel.Store.country" Multiplicity="1" />
+          <End Role="state1" Type="testModel.Store.state1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="state1">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="testModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="testEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="city2" EntityType="testModel.city2" />
+          <EntitySet Name="countries" EntityType="testModel.country" />
+          <EntitySet Name="empstates" EntityType="testModel.empstate" />
+          <EntitySet Name="state1" EntityType="testModel.state1" />
+          <AssociationSet Name="city2_ibfk_1" Association="testModel.city2_ibfk_1">
+            <End Role="state1" EntitySet="state1" />
+            <End Role="city2" EntitySet="city2" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_3" Association="testModel.empstate_ibfk_3">
+            <End Role="city2" EntitySet="city2" />
+            <End Role="empstate" EntitySet="empstates" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_1" Association="testModel.empstate_ibfk_1">
+            <End Role="country" EntitySet="countries" />
+            <End Role="empstate" EntitySet="empstates" />
+          </AssociationSet>
+          <AssociationSet Name="state1_ibfk_1" Association="testModel.state1_ibfk_1">
+            <End Role="country" EntitySet="countries" />
+            <End Role="state1" EntitySet="state1" />
+          </AssociationSet>
+          <AssociationSet Name="empstate_ibfk_2" Association="testModel.empstate_ibfk_2">
+            <End Role="state1" EntitySet="state1" />
+            <End Role="empstate" EntitySet="empstates" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="city2">
+          <Key>
+            <PropertyRef Name="cityid" />
+          </Key>
+          <Property Name="cityid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cityname" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="stateid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="state1" Relationship="testModel.city2_ibfk_1" FromRole="city2" ToRole="state1" />
+          <NavigationProperty Name="empstates" Relationship="testModel.empstate_ibfk_3" FromRole="city2" ToRole="empstate" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="countryid" />
+          </Key>
+          <Property Name="countryid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryname" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="empstates" Relationship="testModel.empstate_ibfk_1" FromRole="country" ToRole="empstate" />
+          <NavigationProperty Name="state1" Relationship="testModel.state1_ibfk_1" FromRole="country" ToRole="state1" />
+        </EntityType>
+        <EntityType Name="empstate">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="lastname" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="address" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="countryid" Type="Int32" Nullable="false" />
+          <Property Name="stateid" Type="Int32" Nullable="false" />
+          <Property Name="cityid" Type="Int32" Nullable="false" />
+          <Property Name="number" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="city2" Relationship="testModel.empstate_ibfk_3" FromRole="empstate" ToRole="city2" />
+          <NavigationProperty Name="country" Relationship="testModel.empstate_ibfk_1" FromRole="empstate" ToRole="country" />
+          <NavigationProperty Name="state1" Relationship="testModel.empstate_ibfk_2" FromRole="empstate" ToRole="state1" />
+        </EntityType>
+        <EntityType Name="state1">
+          <Key>
+            <PropertyRef Name="stateid" />
+          </Key>
+          <Property Name="stateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statename" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+          <Property Name="countryid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="city2" Relationship="testModel.city2_ibfk_1" FromRole="state1" ToRole="city2" />
+          <NavigationProperty Name="country" Relationship="testModel.state1_ibfk_1" FromRole="state1" ToRole="country" />
+          <NavigationProperty Name="empstates" Relationship="testModel.empstate_ibfk_2" FromRole="state1" ToRole="empstate" />
+        </EntityType>
+        <Association Name="city2_ibfk_1">
+          <End Role="state1" Type="testModel.state1" Multiplicity="1" />
+          <End Role="city2" Type="testModel.city2" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="city2">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_3">
+          <End Role="city2" Type="testModel.city2" Multiplicity="1" />
+          <End Role="empstate" Type="testModel.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city2">
+              <PropertyRef Name="cityid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="cityid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_1">
+          <End Role="country" Type="testModel.country" Multiplicity="1" />
+          <End Role="empstate" Type="testModel.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="state1_ibfk_1">
+          <End Role="country" Type="testModel.country" Multiplicity="1" />
+          <End Role="state1" Type="testModel.state1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="countryid" />
+            </Principal>
+            <Dependent Role="state1">
+              <PropertyRef Name="countryid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="empstate_ibfk_2">
+          <End Role="state1" Type="testModel.state1" Multiplicity="1" />
+          <End Role="empstate" Type="testModel.empstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state1">
+              <PropertyRef Name="stateid" />
+            </Principal>
+            <Dependent Role="empstate">
+              <PropertyRef Name="stateid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities2">
+          <EntitySetMapping Name="city2">
+            <EntityTypeMapping TypeName="testModel.city2">
+              <MappingFragment StoreEntitySet="city2">
+                <ScalarProperty Name="cityid" ColumnName="cityid" />
+                <ScalarProperty Name="cityname" ColumnName="cityname" />
+                <ScalarProperty Name="stateid" ColumnName="stateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="testModel.country">
+              <MappingFragment StoreEntitySet="country">
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+                <ScalarProperty Name="countryname" ColumnName="countryname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empstates">
+            <EntityTypeMapping TypeName="testModel.empstate">
+              <MappingFragment StoreEntitySet="empstate">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+                <ScalarProperty Name="stateid" ColumnName="stateid" />
+                <ScalarProperty Name="cityid" ColumnName="cityid" />
+                <ScalarProperty Name="number" ColumnName="number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="state1">
+            <EntityTypeMapping TypeName="testModel.state1">
+              <MappingFragment StoreEntitySet="state1">
+                <ScalarProperty Name="stateid" ColumnName="stateid" />
+                <ScalarProperty Name="statename" ColumnName="statename" />
+                <ScalarProperty Name="countryid" ColumnName="countryid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1">
+        <EntityTypeShape EntityType="testModel.city2" Width="1.5" PointX="5.25" PointY="7.375" Height="1.9802864583333326" IsExpanded="true" />
+        <EntityTypeShape EntityType="testModel.country" Width="1.5" PointX="0.75" PointY="3.375" Height="1.7879850260416657" IsExpanded="true" />
+        <EntityTypeShape EntityType="testModel.empstate" Width="1.5" PointX="7.5" PointY="4.75" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="testModel.state1" Width="1.5" PointX="3" PointY="7.25" Height="2.1725878906249996" IsExpanded="true" />
+        <AssociationConnector Association="testModel.city2_ibfk_1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="8.3651432291666659" />
+          <ConnectorPoint PointX="5.25" PointY="8.3651432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="testModel.empstate_ibfk_3" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="7.7256982421875" />
+          <ConnectorPoint PointX="7.5" PointY="7.7256982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="testModel.empstate_ibfk_1" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="4.9564925130208328" />
+          <ConnectorPoint PointX="7.5" PointY="4.9564925130208328" />
+        </AssociationConnector>
+        <AssociationConnector Association="testModel.state1_ibfk_1" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="5.1629850260416656" />
+          <ConnectorPoint PointX="1.5" PointY="8.3362939453125" />
+          <ConnectorPoint PointX="3" PointY="8.3362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="testModel.empstate_ibfk_2" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="7.28125" />
+          <ConnectorPoint PointX="7.5" PointY="7.28125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

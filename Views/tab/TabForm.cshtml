@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "TabForm";
+}
+
+<div class="container">
+  <h2>Tax Rules</h2>
+  <br/>
+  <form class="form-inline" action="tab/TabForm">
+    <div class="form-group">
+      <label>Tax:</label>
+      <input type="text" class="form-control" id="tax" name="email">
+    </div>
+    <div class="form-group">
+      <label>Tax Rate:</label>
+      <input type="text" class="form-control" id="taxrate" name="pwd">
+    </div>
+    <div class="form-group">
+	<label>Level:</label>
+      <select>
+      <option value="Level1">Level1</option>
+      <option value="Level2">Level2</option>
+      </select>
+    </div>
+	<br/>
+	<br/>
+	<br/>
+	<div class="form-row">
+    <div class="form-group">
+      <label>Country:</label>
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="allcountry"><span><label>Apply Rule to All Country</label></span>
+    </div>
+     </div>
+	 <br/>
+	   <div class="form-group">
+     	 <select>
+      <option value="All">All</option>
+      <option value="India">India</option>
+	  <option value="US">US</option>
+      </select>
+    </div>
+	<br/>
+	<br/>
+	<div class="form-row">
+	<div class="form-group">
+      <label>Country:</label>
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="specifcountry"><span><label>Apply Rule to Specific Country</label></span>
+    </div>
+	</div>
+
+	<br/>
+	<br/>
+		<div class="form-row">
+    <div class="form-group">
+      <label>State:</label>
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="allstate"><span><label>Apply Rule to All State</label></span>
+    </div>
+     </div>
+	 <br/>
+	   <div class="form-group">
+     	 <select>
+      <option value="All">All</option>
+      <option value="Maharshtra">Maharshtra</option>
+	  <option value="Bihar">Bihar</option>
+      </select>
+    </div>
+	<br/>
+	<br/>
+	<div class="form-row">
+	<div class="form-group">
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="specifstate"><span><label>Apply Rule to Specific State</label></span>
+    </div>
+	</div>
+	<br/>
+	<br/>
+    <button type="submit" class="btn btn-primary">Submit</button>
+	<br/>
+	<br/>
+	  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#level1">Level1</a></li>
+    <li><a data-toggle="tab" href="#level2">Level2</a></li>
+
+  <div class="tab-content">
+    <div id="level1" class="tab-pane fade in active">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+    <div id="level2" class="tab-pane fade">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  </form>
+</div>
+

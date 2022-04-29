@@ -1,0 +1,219 @@
+﻿@model IEnumerable<createform.Models.userform>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" onclick="Create()" data-backdrop="false"  data-toggle="modal" data-target="#myModal">
+  Create
+</button><br /><br />
+   
+
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new{enctype = "multipart/form-data"}))
+{
+ <input type="file" name="UploadedFile" /><br />
+<input type="submit" name="Upload" class="btn btn-success"/><br /><br />
+}
+@*
+for Search Filter*@
+<input type="text" id="txtselctcountry" placeholder="Select Country" required />
+<input type="submit" value="Serach" onclick="Getcountry()" class="btn btn-primary"/><br /><br />
+@*
+<button class="btn btn-default">@Html.ActionLink("Create","Create","Home")</button>*@
+<div class="Container">
+<div id="emppar">
+</div>@*
+@Html.Partial("empartial")*@
+
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+     
+        </div>
+        </div>
+      </div>
+     </div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#emppar').load('@Url.Action("empartial","Home")');
+        //$('#myTable').dataTable();
+        //$('#emppar').load('Shared/empartial');
+
+    });
+
+    function Getcountry() {
+        var countryname = $.trim($("#txtselctcountry").val());
+        $.ajax({
+            type: "GET",
+            url: "/Home/SearchCountry",
+            data: {countryname: countryname},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (customers) {
+                debugger;
+                var table = $("#myTable");
+                table.find("tr:not(:first)").remove();
+                $.each(customers, function (i, data) {
+                    debugger;
+                    var table = $("#myTable");
+                    var row = table[0].insertRow(-1);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(0).html(data.id);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(1).html(data.firstname);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(2).html(data.lastname);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(3).html(data.email);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(4).html(data.address);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(5).html(data.countryname);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(6).html(data.stateid);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(7).html(data.cityid);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(8).html(data.number);
+                    $(row).append("<td />");
+                    $(row).find("td").eq(9).html('<button type="button" class="btn btn-success" onclick="edit('+data.id+')"  data-backdrop="false" data-toggle="modal" data-target="#myModal">Edit</button>');
+                    $(row).append("<td />");
+                    $(row).find("td").eq(10).html('<button class="btn btn-danger" onclick="Deleteall(' + data.id + ')">Delete</button>');
+                });
+            },
+            error: function (error) {
+                    debugger;
+                }
+        });
+    }
+
+  
+                
+            
+  
+
+
+// $("#txtselctcountry").keyup(function () {
+//    debugger;
+//        Getcountry();
+//    });
+
+
+      // All Types of serach
+//    function Getcountry(){
+//    debugger;
+//    const searchTerm = $("#txtselctcountry").val().replace(/,/g, '|');
+//    const regex = '\\b(' + searchTerm + ')\\b';
+//    $('#myTable').DataTable().rows().search(regex, true, false).draw(); 
+//    }
+    
+	function DownloadExcel()
+	{
+		$.ajax({
+            url: '/Home/ExportData',
+            method: 'POST',
+            dataType: 'json',
+			cache: false,  
+            success: function (data) {
+                window.location = '/Home/Download';  
+            },
+            error: function (error) {
+                debugger;
+                alert ("Error occured");
+            }
+		});
+	}
+
+
+    function Create() {
+        debugger;
+        $.ajax({
+            url: '/Home/Create',
+            method: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: {},
+            success: function (html) {
+                debugger;
+                $('#myModal .modal-body').html(html);
+                //$('#myModal').modal({ toggle: "toggle", backdrop: "static" });
+                $('#myModal').modal('show');
+
+            },
+            error: function (error) {
+                debugger;
+                
+                $('#myModal .modal-body').html(error.responseText);
+                //$('#myModal').modal({ toggle: "toggle", backdrop: "static" });
+                $('#myModal').modal('show');
+            }
+        });
+    }
+
+
+
+    function edit(id) {
+        debugger;
+        $.ajax({
+            url: '/Home/Edit',
+            method: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: { id: id },
+            success: function (html) {
+                debugger;
+                $('#myModal .modal-body').html(html);
+                $('#myModal').modal('show');
+
+            },
+            error: function (error) {
+                debugger;
+             $('#myModal .modal-body').html(error.responseText);
+             $('#myModal').modal('show');
+            }
+        });
+    }
+
+
+
+    function Deleteall(id) {
+        debugger;
+        $.ajax({
+            url: '/Home/Deletedata',
+            method: 'GET',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: { id: id },
+            success: function (html) {
+                debugger;
+                if (html) {
+                    Getcountry();
+                }
+                else {
+                    alert("data not deleted");
+                }
+
+            },
+            error: function (error) {
+                debugger;
+                alert("Error occured");
+            }
+        });
+    }
+</script>

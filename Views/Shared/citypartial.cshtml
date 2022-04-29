@@ -1,0 +1,50 @@
+﻿@model IEnumerable<createform.Models.city>
+
+<table id="mycityTable" class="table">
+<thead>
+
+<tr>
+<th>CityID</th>
+<th>Cityname</th>
+<th>Stateid</th>
+<th>Delete</th>
+</tr>
+</thead>
+<tbody>
+@foreach (var i in Model)
+{ 
+<tr>
+<td>@Html.DisplayFor(modelItem => i.cityid)  </td>
+<td>@Html.DisplayFor(modelItem => i.cityname)</td>
+<td>@Html.DisplayFor(modelItem => i.statename)</td>
+<td><button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", "city", new { @cityid = i.cityid }, null)</button></td>
+</tr>
+
+}
+@*<tr>
+<td><input type="submit" id="exportable" class="button" value="Print" /></td>
+</tr>*@
+</tbody>
+    
+</table>
+
+@*@using (Html.BeginForm("ExportData", "Home", FormMethod.Post))
+    {*@
+        @*<button onclick="DownloadExcel()" class="btn  btn-success" style="margin-top:20px;">Excel Export</button>
+    <button onclick="DownloadPdf()" class="btn  btn-success" style="margin-top:20px;">PDF Export</button>  *@
+
+    <p>
+
+    <button>@Html.ActionLink("Download PDF","Reports",new {ReportType= "PDF" }) </button> 
+    <button>@Html.ActionLink("Download Word" , "Reports", new {ReportType = "Word"} ) </button> 
+    <button>@Html.ActionLink("Download Excel", "Reports", new { ReportType = "Excel" }) </button> 
+
+    </p>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#mycityTable').dataTable();
+        //$('#emppar').load('Shared/empartial');
+
+    });
+
+</script>

@@ -1,0 +1,116 @@
+﻿@model IEnumerable<createform.Models.userform>
+           
+@*<style>
+.dataTables_filter
+{
+    display:none;
+    }
+</style>*@
+
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                Number
+            </th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+    </thead>
+<tbody>
+@foreach (var i in Model)
+{ 
+    <tr>
+        <td>@Html.DisplayFor(modelItem => i.id)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.firstname)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.lastname)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.email)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.address)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.countryname)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.stateid)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.cityid)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.number)
+        </td>
+        <td>
+            <button type="button" class="btn btn-success" onclick="edit('@Html.DisplayFor(modelItem => i.id) ')"  data-backdrop="false" data-toggle="modal" data-target="#myModal">
+                Edit
+            </button>
+        </td>
+        <td>
+        <button class="btn btn-danger" onclick="Deleteall('@Html.DisplayFor(modelItem =>i.id)')">Delete</button>
+
+          @*  <button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", "Home", new { @id = i.id }, null)</button>*@
+        </td>
+</tr>
+
+}
+@*<tr>
+<td><input type="submit" id="exportable" class="button" value="Print" /></td>
+</tr>*@
+</tbody>
+    
+</table>
+
+@*@using (Html.BeginForm("ExportData", "Home", FormMethod.Post))
+    {*@
+        @*<button onclick="DownloadExcel()" class="btn  btn-success" style="margin-top:20px;">Excel Export</button>
+    <button onclick="DownloadPdf()" class="btn  btn-success" style="margin-top:20px;">PDF Export</button>  *@
+    <p>
+    <button>@Html.ActionLink("Download PDF","Reports",new {ReportType= "PDF" }) </button> 
+    <button>@Html.ActionLink("Download Word" , "Reports", new {ReportType = "Word"} ) </button> 
+    <button>@Html.ActionLink("Download Excel", "Reports", new { ReportType = "Excel" }) </button> 
+
+    </p>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').dataTable();
+//            "bLengthChange": false,
+//            "bFilter": true,
+//            "bInfo": false,
+//            "bPaginate": false,
+//            "bSort": false,
+//            'search': {
+//                'smart': false,
+//                'regex': true
+//            }
+
+        //$('#emppar').load('Shared/empartial');
+    });
+
+</script>

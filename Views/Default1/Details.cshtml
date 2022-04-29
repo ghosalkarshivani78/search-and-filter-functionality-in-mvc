@@ -1,0 +1,20 @@
+﻿@model createform.Models.country
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>country</legend>
+
+    <div class="display-label">countryname</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.countryname)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.countryid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

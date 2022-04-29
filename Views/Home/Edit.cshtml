@@ -1,0 +1,208 @@
+﻿@model createform.Models.userform
+@{
+    ViewBag.Title = "Edit";
+}
+<style>
+.error
+{
+color:Red;    
+}
+
+</style>
+<h2>Edit</h2>
+<div class="Container">
+<form action="@Url.Action("Edit","Home")" method="post" id="editmodal">
+@Html.HiddenFor(x=>x.id)
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Name</label>
+@Html.TextBoxFor(x => x.firstname, new { @class="form-control"})
+</div>
+<div class="form-group col-md-6">
+<label>Last Name</label>
+@Html.TextBoxFor(x => x.lastname, new { @class="form-control"})
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-group col-md-4">
+<label>Email</label>
+@Html.TextBoxFor(x => x.email, new { @class="form-control"})
+</div>
+<div class="form-group col-md-4">
+<label>Address</label>
+@Html.TextBoxFor(x => x.address, new { @class="form-control"})
+</div>
+<div class="form-group col-md-4">
+<label>Number</label>
+@Html.TextBoxFor(x => x.number, new { @class="form-control"})
+</div>
+</div>
+
+
+
+<div class="form-row">
+<div class="form-group col-md-4">
+<label>Country</label>
+@Html.DropDownListFor(x => Model.countryname, Model.countries, "Please select", new { @class = "form-control" })
+</div>
+
+<div class="form-group col-md-4">
+<label>State</label>
+@Html.DropDownListFor(x => Model.stateid, Model.states, new { @class = "form-control" })
+</div>
+
+<div class="form-group col-md-4">
+<label>City</label>
+@Html.DropDownListFor(x => Model.cityid, Model.cities, new { @class = "form-control" })
+</div>
+</div>
+
+
+<div class="form-row">
+<div class="form-group">
+<div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+</div>
+
+</div>
+</form>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var ddlcountries = $("#countryname");
+        var ddlstates = $("#stateid");
+        var ddlcities = $("#cityid");
+
+        ddlcountries.change(function () {
+            debugger;
+            $.ajax({
+                url: '/Home/GetstateBycountryId',
+                method: 'get',
+                data: { countryid: $(this).val() },
+                dataType: 'json',
+                success: function (data) {
+                    debugger;
+                    ddlstates.empty();
+                    ddlstates.append($('<option/>', { value: "", text: 'Select States' }));
+                    $(data).each(function (index, item) {
+                        ddlstates.append($('<option/>', { value: item.Value, text: item.Text }));
+                    });
+                }
+            });
+
+        })
+
+
+        ddlstates.change(function () {
+            debugger;
+            $.ajax({
+                url: '/Home/GetcityBystateId',
+                method: 'get',
+                data: { stateid: $(this).val() },
+                dataType: 'json',
+                success: function (data) {
+                    debugger;
+                    ddlcities.empty();
+                    ddlcities.append($('<option/>', { value: "", text: 'Select States' }));
+                    $(data).each(function (index, item) {
+                        ddlcities.append($('<option/>', { value: item.Value, text: item.Text }));
+                    });
+                }
+            });
+
+        })
+
+
+
+
+
+
+        //for only Numeric input
+        $('#number').keypress(function (e) {
+            var charCode = (e.which) ? e.which : event.keyCode
+            if (String.fromCharCode(charCode).match(/[^0-9]/g))
+                return false;
+        })
+
+
+
+
+
+
+
+        $('#editmodal').submit(function () {
+            debugger;
+            var firstname = document.forms["editmodal"]["firstname"].value;
+            var lastname = document.forms["editmodal"]["lastname"].value;
+            var email = document.forms["editmodal"]["email"].value;
+            var address = document.forms["editmodal"]["address"].value;
+            var countryname = document.forms["editmodal"]["countryname"].value;
+            var stateid = document.forms["editmodal"]["stateid"].value;
+            var cityid = document.forms["editmodal"]["cityid"].value;
+            var number = document.forms["editmodal"]["number"].value;
+
+
+            $(".error").remove();
+
+            if (firstname == "") {
+                $("#firstname").after('<span class="error">Enter First Name</span>');
+            }
+            if (lastname == "") {
+                $("#lastname").after('<span class="error">Enter Last Name</span>');
+            }
+            if (email == "") {
+                $("#email").after('<span class="error">Enter Email</span>');
+            }
+            else {
+                var regEx = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                var validEmail = regEx.test(email);
+                if (!validEmail) {
+                    $('#email').after('<span class="error">Enter a valid email</span>');
+                    return false;
+                }
+            }
+            if (address == "") {
+                $("#address").after('<span class="error">Enter Address</span>');
+            }
+            if (countryname == "") {
+                $("#countryname").after('<span class="error">Enter Country</span>');
+            }
+            if (stateid == "") {
+                $("#stateid").after('<span class="error">Enter State</span>');
+            }
+            if (cityid == "") {
+                $("#cityid").after('<span class="error">Enter City</span>');
+            }
+            if (number == "") {
+                $("#number").after('<span class="error">Enter Email</span>');
+            }
+            else {
+                var num = number.length;
+                if (num !== 10) {
+                    $("#number").after('<span class="error">Enter 10 Digit Number</span>');
+                }
+            }
+            if (firstname != "" && email != "" && address != "" && countryname != "" && stateid != "" && cityid != "" && number != "" && number.length == 10) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        })
+
+
+
+    })
+
+
+</script>
+
+
+
